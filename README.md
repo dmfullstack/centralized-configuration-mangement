@@ -1,7 +1,9 @@
 # centralized-configuration-mangement
 
 
-Sample projects to show how to use Centralized Configuration Management in a polygot microservice system.
+Sample projects to show how to use _Centralized Configuration Management_ in a microservice system with Go and Java applications.
+
+[Read more](https://malike.github.io/Configuration-Managment-For-Microservices/)
 
 The project contains :
 
