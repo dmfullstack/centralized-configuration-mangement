@@ -1,0 +1,32 @@
+## YAML Template.
+
+server:
+  port: 8888
+  
+  
+
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+     server:
+        monitor:
+          github:
+            enabled: true         
+        health:
+          enabled: true     
+        git:
+          uri: https://github.com/malike/centralized-configuration.git
+          force-pull: true
+          username: malike_st
+          password: password
+    bus:     
+      enabled: true
+    stream:
+      kafka:
+        binder:
+          zkNodes: localhost:2181
+          brokers: localhost:9092
+                                          
