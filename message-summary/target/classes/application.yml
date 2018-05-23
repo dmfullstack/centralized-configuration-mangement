@@ -1,0 +1,10 @@
+## YAML Template.
+
+server:
+  port: 5555
+  
+
+
+spring:
+  application:
+    name: message-summary

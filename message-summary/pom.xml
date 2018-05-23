@@ -11,14 +11,14 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>st.malike</groupId>
-  <artifactId>payment-gateway</artifactId>
+  <artifactId>message-summary</artifactId>
   <packaging>jar</packaging>
-  <name>Payment Gateway</name>
+  <name>Message Summary</name>
   <version>1.0-SNAPSHOT</version>
   <description>Payment Gateway</description>
 
   <properties>
-    <start-class>st.malike.payment.gateway.PaymentGatewayMain</start-class>
+    <start-class>st.malike.message.summary.MessageSummaryMain</start-class>
     <java.version>8</java.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
