@@ -1,8 +1,6 @@
 package st.malike.message.summary.http;
 
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -26,7 +24,7 @@ public class SummaryController extends ExceptionController {
   @RequestMapping(value = {
       "/message/search"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
-  public JSONResponse searchMessage(@RequestBody Object data){
+  public JSONResponse searchMessage(@RequestBody Object data) {
     JSONResponse jSONResponse = new JSONResponse();
     Map<String, Object> dataHash = (Map<String, Object>) data;
     String param = null;
@@ -34,7 +32,7 @@ public class SummaryController extends ExceptionController {
     Integer limit = 100;
     jSONResponse.setStatus(true);
     jSONResponse.setCount(messageService.countSearchMessage(param));
-    jSONResponse.setResult(messageService.searchMessage(param,offset,limit));
+    jSONResponse.setResult(messageService.searchMessage(param, offset, limit));
     jSONResponse.setMessage(Enums.JSONResponseMessage.SUCCESS.toString());
     return jSONResponse;
   }

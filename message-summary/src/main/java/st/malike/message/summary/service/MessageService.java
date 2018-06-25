@@ -18,7 +18,7 @@ public class MessageService {
     return 0;
   }
 
-  public List<Object> searchMessage(String param,Integer offset,Integer limit){
+  public List<Object> searchMessage(String param, Integer offset, Integer limit) {
     return null;
   }
 }

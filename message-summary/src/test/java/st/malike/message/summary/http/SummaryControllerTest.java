@@ -15,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import st.malike.message.summary.MessageSummaryMain;
+import st.malike.message.summary.util.Enums.JSONResponseMessage;
 
 /**
  * @autor malike_st
@@ -49,6 +50,19 @@ public class SummaryControllerTest {
         .statusCode(HttpStatus.SC_OK)
         .body("status", Matchers.is(true))
         .body("message", Matchers.is("SUCCESS"));
+  }
+
+  @Test
+  public void testSearchMessageMissingRequiredParam() {
+    RestAssuredMockMvc.given()
+        .log().all().contentType("application/json")
+        .body(new Gson().toJson(data))
+        .when()
+        .post("/message/search")
+        .then()
+        .statusCode(HttpStatus.SC_OK)
+        .body("status", Matchers.is(false))
+        .body("message", Matchers.is(JSONResponseMessage.MISSING_DATA_REQUIRED.toString()));
   }
 
 
