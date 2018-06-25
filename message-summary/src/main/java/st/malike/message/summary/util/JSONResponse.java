@@ -1,9 +1,11 @@
 package st.malike.message.summary.util;
 
+import java.io.Serializable;
+
 /**
  * @autor malike_st
  */
-public class JSONResponse {
+public class JSONResponse implements Serializable {
 
   private boolean status;
   private Object result;
