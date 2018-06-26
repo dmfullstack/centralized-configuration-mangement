@@ -31,19 +31,46 @@ public class SummaryController extends ExceptionController {
     String param = null;
     Integer offset = 0;
     Integer limit = 100;
-    if(dataHash.containsKey("param")){
-      param = (String)dataHash.get("param");
-    }if(dataHash.containsKey("offset")){
-      offset = (Integer) dataHash.get("offset");
-    }if(dataHash.containsKey("limit")){
-      limit = (Integer)dataHash.get("limit");
+    if (dataHash.containsKey("param")) {
+      param = (String) dataHash.get("param");
     }
-    if(param ==null){
+    if (dataHash.containsKey("offset")) {
+      offset = (Integer) dataHash.get("offset");
+    }
+    if (dataHash.containsKey("limit")) {
+      limit = (Integer) dataHash.get("limit");
+    }
+    if (param == null) {
       throw new MissingParameterException("Required param missing");
     }
     jSONResponse.setStatus(true);
     jSONResponse.setCount(messageService.countSearchMessage(param));
     jSONResponse.setResult(messageService.searchMessage(param, offset, limit));
+    jSONResponse.setMessage(Enums.JSONResponseMessage.SUCCESS.toString());
+    return jSONResponse;
+  }
+
+  @RequestMapping(value = {
+      "/message/summary"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public JSONResponse messageSummary(@RequestBody Object data){
+    JSONResponse jSONResponse = new JSONResponse();
+    Map<String, Object> dataHash = (Map<String, Object>) data;
+    String channel = null;
+    String startDate = null;
+    String endDate = null;
+    if (dataHash.containsKey("channel")) {
+      channel = (String) dataHash.get("channel");
+    }
+    if (dataHash.containsKey("startDate")) {
+      startDate = (String) dataHash.get("startDate");
+    }
+    if (dataHash.containsKey("endDate")) {
+      endDate = (String) dataHash.get("endDate");
+    }
+    jSONResponse.setStatus(true);
+    jSONResponse.setCount(0);
+    jSONResponse.setResult(null);
     jSONResponse.setMessage(Enums.JSONResponseMessage.SUCCESS.toString());
     return jSONResponse;
   }

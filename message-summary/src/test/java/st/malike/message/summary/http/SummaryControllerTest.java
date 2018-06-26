@@ -41,7 +41,7 @@ public class SummaryControllerTest {
 
   @Test
   public void testSearchMessage() {
-    data.put("param","sample");
+    data.put("param", "sample");
     RestAssuredMockMvc.given()
         .log().all().contentType("application/json")
         .body(new Gson().toJson(data))
@@ -64,6 +64,20 @@ public class SummaryControllerTest {
         .statusCode(HttpStatus.SC_OK)
         .body("status", Matchers.is(false))
         .body("message", Matchers.is(JSONResponseMessage.MISSING_DATA_REQUIRED.toString()));
+  }
+
+  @Test
+  public void testGetMessageSummary() {
+    data.put("channel", "sms");
+    RestAssuredMockMvc.given()
+        .log().all().contentType("application/json")
+        .body(new Gson().toJson(data))
+        .when()
+        .post("/message/summary")
+        .then()
+        .statusCode(HttpStatus.SC_OK)
+        .body("status", Matchers.is(true))
+        .body("message", Matchers.is("SUCCESS"));
   }
 
 
