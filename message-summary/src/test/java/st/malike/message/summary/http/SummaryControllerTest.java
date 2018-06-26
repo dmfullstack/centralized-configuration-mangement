@@ -41,6 +41,7 @@ public class SummaryControllerTest {
 
   @Test
   public void testSearchMessage() {
+    data.put("param","sample");
     RestAssuredMockMvc.given()
         .log().all().contentType("application/json")
         .body(new Gson().toJson(data))
