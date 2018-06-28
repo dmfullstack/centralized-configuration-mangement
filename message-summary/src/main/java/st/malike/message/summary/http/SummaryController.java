@@ -1,5 +1,6 @@
 package st.malike.message.summary.http;
 
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -53,7 +54,7 @@ public class SummaryController extends ExceptionController {
   @RequestMapping(value = {
       "/message/summary"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
-  public JSONResponse messageSummary(@RequestBody Object data){
+  public JSONResponse messageSummary(@RequestBody Object data) {
     JSONResponse jSONResponse = new JSONResponse();
     Map<String, Object> dataHash = (Map<String, Object>) data;
     String channel = null;
@@ -68,9 +69,10 @@ public class SummaryController extends ExceptionController {
     if (dataHash.containsKey("endDate")) {
       endDate = (String) dataHash.get("endDate");
     }
+    List<Map> messageSummary = messageService.messageSummary(channel, startDate, endDate);
     jSONResponse.setStatus(true);
-    jSONResponse.setCount(0);
-    jSONResponse.setResult(null);
+    jSONResponse.setCount(messageSummary.size());
+    jSONResponse.setResult(messageSummary);
     jSONResponse.setMessage(Enums.JSONResponseMessage.SUCCESS.toString());
     return jSONResponse;
   }
