@@ -3,6 +3,7 @@ package st.malike.message.summary.service;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageService {
 
-  private final String MAP_SCRIPT = "";
-  private final String REDUCE_SCRIPT = "";
+  @Value("${map.function}")
+  private String MAP_SCRIPT;
+  @Value("${reduce.function}")
+  private String REDUCE_SCRIPT;
   @Autowired
   private MongoTemplate mongoTemplate;
 
