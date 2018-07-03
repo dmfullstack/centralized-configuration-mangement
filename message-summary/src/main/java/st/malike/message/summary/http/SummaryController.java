@@ -54,7 +54,7 @@ public class SummaryController extends ExceptionController {
   @RequestMapping(value = {
       "/message/summary"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
-  public JSONResponse messageSummary(@RequestBody Object data) {
+  public JSONResponse messageSummary(@RequestBody Object data) throws MissingParameterException {
     JSONResponse jSONResponse = new JSONResponse();
     Map<String, Object> dataHash = (Map<String, Object>) data;
     String channel = null;
@@ -68,6 +68,9 @@ public class SummaryController extends ExceptionController {
     }
     if (dataHash.containsKey("endDate")) {
       endDate = (String) dataHash.get("endDate");
+    }
+    if  (channel == null) {
+      throw new MissingParameterException("Required param missing");
     }
     List<Map> messageSummary = messageService.messageSummary(channel, startDate, endDate);
     jSONResponse.setStatus(true);

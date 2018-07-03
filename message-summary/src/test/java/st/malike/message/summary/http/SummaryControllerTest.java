@@ -80,5 +80,18 @@ public class SummaryControllerTest {
         .body("message", Matchers.is("SUCCESS"));
   }
 
+  @Test
+  public void testGetMessageSummaryNoChannelException() {
+    RestAssuredMockMvc.given()
+        .log().all().contentType("application/json")
+        .body(new Gson().toJson(data))
+        .when()
+        .post("/message/summary")
+        .then()
+        .statusCode(HttpStatus.SC_OK)
+        .body("status", Matchers.is(false))
+        .body("message", Matchers.is(JSONResponseMessage.MISSING_DATA_REQUIRED.toString()));
+  }
+
 
 }
