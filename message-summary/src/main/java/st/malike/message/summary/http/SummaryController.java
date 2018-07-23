@@ -76,7 +76,11 @@ public class SummaryController extends ExceptionController {
     }
     List<Map> messageSummary = messageService.messageSummary(channel, startDate, endDate);
     jSONResponse.setStatus(true);
-    jSONResponse.setCount(messageSummary.size());
+    if(messageSummary!=null) {
+      jSONResponse.setCount(messageSummary.size());
+    }else{
+      jSONResponse.setCount(0);
+    }
     jSONResponse.setResult(messageSummary);
     jSONResponse.setMessage(Enums.JSONResponseMessage.SUCCESS.toString());
     return jSONResponse;
