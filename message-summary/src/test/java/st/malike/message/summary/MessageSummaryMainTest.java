@@ -10,8 +10,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class MessageSummaryMainTest {
 
-    @Test
-    public void contextLoads() {
-      MessageSummaryMain.main(new String[]{});
-    }
+  @Test
+  public void contextLoads() {
+    MessageSummaryMain.main(new String[]{});
   }
+}

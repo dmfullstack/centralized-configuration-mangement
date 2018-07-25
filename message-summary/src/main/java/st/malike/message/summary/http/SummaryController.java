@@ -1,6 +1,9 @@
 package st.malike.message.summary.http;
 
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -22,6 +25,7 @@ import st.malike.message.summary.util.JSONResponse;
 @RefreshScope
 public class SummaryController extends ExceptionController {
 
+  SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
   @Autowired
   private MessageService messageService;
 
@@ -56,29 +60,30 @@ public class SummaryController extends ExceptionController {
   @RequestMapping(value = {
       "/message/summary"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
-  public JSONResponse messageSummary(@RequestBody Object data) throws MissingParameterException {
+  public JSONResponse messageSummary(@RequestBody Object data)
+      throws MissingParameterException, ParseException {
     JSONResponse jSONResponse = new JSONResponse();
     Map<String, Object> dataHash = (Map<String, Object>) data;
     String channel = null;
-    String startDate = null;
-    String endDate = null;
+    Date startDate = null;
+    Date endDate = null;
     if (dataHash.containsKey("channel")) {
       channel = (String) dataHash.get("channel");
     }
     if (dataHash.containsKey("startDate")) {
-      startDate = (String) dataHash.get("startDate");
+      startDate = simpleDateFormat.parse((String) dataHash.get("startDate"));
     }
     if (dataHash.containsKey("endDate")) {
-      endDate = (String) dataHash.get("endDate");
+      endDate = simpleDateFormat.parse((String) dataHash.get("endDate"));
     }
-    if  (channel == null) {
+    if (channel == null) {
       throw new MissingParameterException("Required param missing");
     }
-    List<Map> messageSummary = messageService.messageSummary(channel, startDate, endDate);
+    Iterator messageSummary = messageService.messageSummary(channel, startDate, endDate);
     jSONResponse.setStatus(true);
-    if(messageSummary!=null) {
-      jSONResponse.setCount(messageSummary.size());
-    }else{
+    if (messageSummary != null) {
+//      jSONResponse.setCount(messageSummary.());
+    } else {
       jSONResponse.setCount(0);
     }
     jSONResponse.setResult(messageSummary);

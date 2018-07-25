@@ -10,7 +10,7 @@ public class JSONResponse implements Serializable {
   private boolean status;
   private Object result;
   private String message;
-  private int count;
+  private long count;
 
   public boolean isStatus() {
     return status;
@@ -36,11 +36,11 @@ public class JSONResponse implements Serializable {
     this.message = message;
   }
 
-  public int getCount() {
+  public long getCount() {
     return count;
   }
 
-  public void setCount(int count) {
+  public void setCount(long count) {
     this.count = count;
   }
 }
