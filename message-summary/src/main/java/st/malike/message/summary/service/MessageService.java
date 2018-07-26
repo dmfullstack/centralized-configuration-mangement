@@ -32,10 +32,10 @@ public class MessageService {
 
   public long countSearchMessage(String param) {
     Query query = new Query();
-    Criteria idCrit = Criteria.where("messageId").regex(param);
-    Criteria referenceCrit = Criteria.where("reference").regex(param);
-    Criteria subjectCrit = Criteria.where("subject").regex(param);
-    Criteria recipientCrit = Criteria.where("recipient").regex(param);
+    Criteria idCrit = Criteria.where("messageId").regex(param,"i");
+    Criteria referenceCrit = Criteria.where("reference").regex(param,"i");
+    Criteria subjectCrit = Criteria.where("subject").regex(param,"i");
+    Criteria recipientCrit = Criteria.where("recipient").regex(param,"i");
     query.addCriteria(new Criteria().orOperator(new Criteria[]{idCrit, referenceCrit, subjectCrit,
         recipientCrit})).with(new Sort(Direction.ASC, new String[]{"dateCreated"}));
     return mongoTemplate.count(query, MESSAGE_COLLECTION);
@@ -43,10 +43,10 @@ public class MessageService {
 
   public List<Map> searchMessage(String param, Integer offset, Integer limit) {
     Query query = new Query();
-    Criteria idCrit = Criteria.where("messageId").regex(param);
-    Criteria referenceCrit = Criteria.where("reference").regex(param);
-    Criteria subjectCrit = Criteria.where("subject").regex(param);
-    Criteria recipientCrit = Criteria.where("recipient").regex(param);
+    Criteria idCrit = Criteria.where("messageId").regex(param,"i");
+    Criteria referenceCrit = Criteria.where("reference").regex(param,"i");
+    Criteria subjectCrit = Criteria.where("subject").regex(param,"i");
+    Criteria recipientCrit = Criteria.where("recipient").regex(param,"i");
     query.addCriteria(new Criteria().orOperator(new Criteria[]{idCrit, referenceCrit, subjectCrit,
         recipientCrit})).with(new Sort(Direction.ASC, new String[]{"dateCreated"}));
     query.skip(offset).limit(limit);
@@ -55,7 +55,7 @@ public class MessageService {
 
   public Iterator messageSummary(String channel, Date startDate, Date endDate) {
     Query query = new Query();
-    query.addCriteria(Criteria.where("reference").regex(channel));
+    query.addCriteria(Criteria.where("reference").regex(channel,"i"));
     query.addCriteria(Criteria.where("dateCreated").gte(startDate).lte(endDate));
     return mongoTemplate.mapReduce(query, MESSAGE_COLLECTION, MAP_SCRIPT,
         REDUCE_SCRIPT, Map.class).iterator();
