@@ -17,3 +17,4 @@ notifications based on data in [Apache Kafka](https://kafka.apache.org/)
 `go-kafka-alert` and `message-summary`.
 
 Note : [configuration files are here](https://github.com/malike/centralized-configuration)
+
