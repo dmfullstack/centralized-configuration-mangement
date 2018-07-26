@@ -76,14 +76,12 @@ public class SummaryController extends ExceptionController {
     if (dataHash.containsKey("endDate")) {
       endDate = simpleDateFormat.parse((String) dataHash.get("endDate"));
     }
-    if (channel == null) {
+    if (channel == null || startDate == null || endDate == null) {
       throw new MissingParameterException("Required param missing");
     }
     Iterator messageSummary = messageService.messageSummary(channel, startDate, endDate);
     jSONResponse.setStatus(true);
-    if (messageSummary != null) {
-//      jSONResponse.setCount(messageSummary.());
-    } else {
+    if (messageSummary == null) {
       jSONResponse.setCount(0);
     }
     jSONResponse.setResult(messageSummary);

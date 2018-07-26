@@ -13,7 +13,7 @@ notifications based on data in [Apache Kafka](https://kafka.apache.org/)
 2. [message-summary](https://github.com/malike/centralized-configuration-mangement/tree/master/message-summary). A sample java micro service to give summary of messages sent by 
 `go-kafka-alert`. 
 
-3. A [config server]() to serve as centralized configuration management for the applications in 
+3. A [config server](https://github.com/malike/centralized-configuration-mangement/tree/master/config-server) to serve as centralized configuration management for the applications in 
 `go-kafka-alert` and `message-summary`.
 
-Note : [configuration files](https://github.com/malike/centralized-configuration) can be located in another reposistory.
+Note : [configuration files are here](https://github.com/malike/centralized-configuration)

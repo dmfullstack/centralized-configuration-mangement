@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @autor malike_st
  */
 @RunWith(SpringRunner.class)
-public class MessageSummaryMainTest {
+public class  MessageSummaryMainTest {
 
   @Test
   public void contextLoads() {
