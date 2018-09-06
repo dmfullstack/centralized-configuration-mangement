@@ -1,6 +1,8 @@
 language: java
 jdk:
   - oraclejdk8
+services:
+- mongodb  
 env:
   - SERVICE_DIR=config-server
   - SERVICE_DIR=message-summary
