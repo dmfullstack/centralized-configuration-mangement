@@ -1,4 +1,7 @@
 language: java
 jdk:
   - oraclejdk8
-
+env:
+  - SERVICE_DIR=config-server
+  - SERVICE_DIR=message-summary
+script: cd $SERVICE_DIR && mvn clean verify
