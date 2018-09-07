@@ -18,7 +18,7 @@ env:
 script: cd $SERVICE_DIR && mvn clean verify
 
 after_success:
-  - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+  - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
   - export IMAGE_NAME=stmalike/config-server
   - docker build -t $IMAGE_NAME:$COMMIT .
