@@ -1,5 +1,6 @@
 # centralized-configuration-management
 
+[![Build Status](https://travis-ci.org/malike/centralized-configuration-mangement.svg?branch=master)](https://travis-ci.org/malike/centralized-configuration-mangement)
 
 Sample projects to show how to use _Centralized Configuration Management_ in a microservice system with Go and Java applications.
 
