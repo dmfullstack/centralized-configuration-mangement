@@ -1,11 +1,26 @@
+sudo: required
 language: java
 jdk:
   - oraclejdk8
 before_script:
   - mongo go_kafka_alert --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'  
 services:
-- mongodb  
+- mongodb 
+- docker 
+ 
 env:
+  global:
+  - secure: "Nr8v9cInVu7NCbHjgPd7OGR1uMnuUYy14zUJ45mzdRSsuAUUQmvdQxTyfds8EXllvbW5hKBUMiCvma7mmxkNY4Y4O9gYYOgSWirmB2NcwyOevBW42B+lSWDOKFtUhRkZ9iMzFoP1xXkDoGP0X+OzlCHSiGFiMIGHeJoF+fimMOBu7+4TmoyxTtPs7zQLgBD9hkJh5lWqw/xRBBn31MPDWFwx4dVWoNYOvabFIzwK42ImB/OcQ8/Zw+vkRn0Zeg6bMuFMbh34X1vfgs2pV29zEWwh6Uegn08Zzc3Wzl615ynHGd8/CvSMarGt6bo6nmWEZdm002WIKV9CJr9PWMBvhmpj8OJwx5beNBi2OnB/UvVxn3wI5QpWNV2QFXv0dAqOBJ1XKgmfjn/yJvcYWDLC5isSGCRH4gviK+XMdlUuzXoii5UWfltLtcYRLbbblmz3e57wWGGHQhgwRGu6OGyt1KR5EjiZDxVX3BR2UdbdO/Wd5tsJbN6zt3Y5EfI1uDmgBRoI7zd66ueqRDJESH+elpivDcDSqA+Pm+S5G8RHNHunk4j5DFJjAY7neqyxUsclnLGJLlKxh73V1bpQQfyEYsOx8jlFvRhi4Zj/rf7NoPpQSYPgMAdGYZXuMld+gUjxjnZ7opHXDAimjXQPwvVE7tQWl7qGMEK+xVgFGeoM/Rk="
+  - secure: "tK8r/PfDRqDHtWWrC8ggp/ILsCfaMAEKhe1V98LDFXMOzTtDjHvgBwTbQSu7KQdwe9MPhqAFB0TRmNAfIYUuZqDEfVP+UBJn3gPOrlOIfqTGjlRxhHT+MMlG5hRYVHfIdX80NMdwLFK+W5uf5EyTENNO0/z/ko07Js78e6iYdeOwF9oRItlWNbWAwGk4HhoC+nBVIzrxhCIBdbc4beKcJGKSiy8/rsogy3VYY9VFwtbe738rtCjOgq8YkK7ibfHPdDqSaaQwAlhgQhlHlQjAYZR1xD1hJgn3fyqn6dxQ3Rt7NiiWKYOThw7lUgfEmDGCIW9nB0JZn5FSKKn8m+6jyspMLzp53k3kooTmGevho9fs/7sO9xXv15W+6nohB/iC9N6LQj8B5zN0YRQbE2IYBifCaEviHrMQL2VE4/ksrAwA9wvr3cJqP7rwAl1v0lzn1qJNbREH2cdPCYnRo2Ujf9b7+06vPjIJj0/g4U8nEvzlu2vzHx9oPB2nqWKySj7/jL5cifWs6T/H/FpqoZjGPgHUuYmgCRFbYk54g8bqq2y1pueSmUErws45DpvbCyN5F7RFNHRa0g+gayinrT6Tbr7rU9R/qoAbkHfGpJY4k1Z5C1Kk7JWgpkxn8o9eGi96WGruzzinJrwpogtpQwsuBvE7WHefGfAZwarG0wX3UTg="
   - SERVICE_DIR=config-server
   - SERVICE_DIR=message-summary
+
 script: cd $SERVICE_DIR && mvn clean verify
+
+after_success:
+  - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - export IMAGE_NAME=stmalike/config-server
+  - docker build -t $IMAGE_NAME:$COMMIT .
+  - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
+  - docker push $IMAGE_NAME
