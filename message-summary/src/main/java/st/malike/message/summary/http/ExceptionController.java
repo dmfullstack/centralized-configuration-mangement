@@ -22,7 +22,7 @@ public class ExceptionController {
   public JSONResponse parseException(ParseException e) {
     JSONResponse jSONResponse = new JSONResponse();
     jSONResponse.setStatus(false);
-    jSONResponse.setMessage(Enums.JSONResponseMessage.MISSING_DATA_REQUIRED.toString());
+    jSONResponse.setMessage(Enums.JSONResponseMessage.PARAMETER_MISMATCH.toString());
     jSONResponse.setResult(e.toString());
     return jSONResponse;
   }
@@ -32,7 +32,7 @@ public class ExceptionController {
   public JSONResponse missingParameterException(MissingParameterException e) {
     JSONResponse jSONResponse = new JSONResponse();
     jSONResponse.setStatus(false);
-    jSONResponse.setMessage(Enums.JSONResponseMessage.PARAMETER_MISMATCH.toString());
+    jSONResponse.setMessage(Enums.JSONResponseMessage.MISSING_DATA_REQUIRED.toString());
     jSONResponse.setResult(e.toString());
     return jSONResponse;
   }

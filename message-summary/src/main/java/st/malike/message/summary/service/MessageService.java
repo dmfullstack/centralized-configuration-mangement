@@ -54,11 +54,14 @@ public class MessageService {
   }
 
   public Iterator messageSummary(String channel, Date startDate, Date endDate) {
-    Query query = new Query();
-    query.addCriteria(Criteria.where("reference").regex(channel, "i"));
-    query.addCriteria(Criteria.where("dateCreated").gte(startDate).lte(endDate));
-    return mongoTemplate.mapReduce(query, MESSAGE_COLLECTION, MAP_SCRIPT,
-        REDUCE_SCRIPT, Map.class).iterator();
-
+    try {
+      Query query = new Query();
+      query.addCriteria(Criteria.where("reference").regex(channel, "i"));
+      query.addCriteria(Criteria.where("dateCreated").gte(startDate).lte(endDate));
+      return mongoTemplate.mapReduce(query, MESSAGE_COLLECTION, MAP_SCRIPT,
+          REDUCE_SCRIPT, Map.class).iterator();
+    }catch(Exception e){
+    }
+    return null;
   }
 }

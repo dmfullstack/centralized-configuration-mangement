@@ -2,10 +2,12 @@ package st.malike.message.summary.http;
 
 import com.google.gson.Gson;
 import com.jayway.restassured.module.mockmvc.RestAssuredMockMvc;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +31,7 @@ public class SummaryControllerTest {
   Map data;
   @Autowired
   private SummaryController summaryController;
+  SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
   @Before
   public void setUp() throws Exception {
@@ -69,6 +72,8 @@ public class SummaryControllerTest {
   @Test
   public void testGetMessageSummary() {
     data.put("channel", "sms");
+    data.put("startDate",simpleDateFormat.format(new DateTime().minusDays(10).toDate()));
+    data.put("endDate",simpleDateFormat.format(new DateTime().toDate()));
     RestAssuredMockMvc.given()
         .log().all().contentType("application/json")
         .body(new Gson().toJson(data))

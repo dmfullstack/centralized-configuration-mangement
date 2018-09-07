@@ -1,6 +1,8 @@
 language: java
 jdk:
   - oraclejdk8
+before_script:
+  - mongo go_kafka_alert --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'  
 services:
 - mongodb  
 env:
