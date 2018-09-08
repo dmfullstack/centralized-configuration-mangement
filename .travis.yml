@@ -26,10 +26,9 @@ after_success:
   - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:travis-$TRAVIS_BUILD_NUMBER
   - docker push $IMAGE_NAME
   - cd ../config-server
-  - export SERVICE_DIR=config-server  
   - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
-  - export IMAGE_NAME=stmalike/$SERVICE_DIR
+  - export IMAGE_NAME=stmalike/config-server
   - docker build -f Dockerfile -t $IMAGE_NAME:$TAG .
   - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
   - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:travis-$TRAVIS_BUILD_NUMBER
