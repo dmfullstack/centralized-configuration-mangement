@@ -15,21 +15,10 @@ env:
   - SERVICE_DIR=config-server
   - SERVICE_DIR=message-summary
 
+before_install:
+  - chmod +x .travis/pushimage.sh
+
 script: cd $SERVICE_DIR && mvn clean verify
 
-after_success:
-  - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
-  - export IMAGE_NAME=stmalike/$SERVICE_DIR
-  - docker build -f Dockerfile -t $IMAGE_NAME:$TAG .
-  - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
-  - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:travis-$TRAVIS_BUILD_NUMBER
-  - docker push $IMAGE_NAME
-  - cd config-server
-  - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
-  - export IMAGE_NAME=stmalike/config-server
-  - docker build -f Dockerfile -t $IMAGE_NAME:$TAG .
-  - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
-  - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:travis-$TRAVIS_BUILD_NUMBER
-  - docker push $IMAGE_NAME
+after_script: 
+  - cd $SERVICE_DIR && bash .travis/pushimage.sh $SERVICE_DIR 
