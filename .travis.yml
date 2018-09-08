@@ -20,5 +20,6 @@ before_install:
 
 script: cd $SERVICE_DIR && mvn clean verify
 
-after_script: 
-  - cd $SERVICE_DIR && bash .travis/pushimage.sh $SERVICE_DIR 
+after_success: 
+  - bash .travis/pushimage.sh config-server
+  - bash .travis/pushimage.sh message-summary
