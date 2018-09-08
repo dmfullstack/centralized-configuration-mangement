@@ -16,10 +16,10 @@ env:
   - SERVICE_DIR=message-summary
 
 before_install:
-  - chmod +x .travis/pushimage.sh
+  - chmod +x ./.travis/pushimage.sh
 
 script: cd $SERVICE_DIR && mvn clean verify
 
 after_success: 
-  - bash .travis/pushimage.sh config-server
-  - bash .travis/pushimage.sh message-summary
+  - bash ./.travis/pushimage.sh config-server
+  - bash ./.travis/pushimage.sh message-summary
