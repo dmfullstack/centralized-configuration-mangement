@@ -17,9 +17,11 @@ env:
 
 script: cd $SERVICE_DIR && mvn clean verify
 
+after_script:
+  - cd ../$SERVICE_DIR
+
 after_success:
-  - echo $SERVICE_DIR
-  - cd $SERVICE_DIR
+  - cd ../$SERVICE_DIR
   - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
   - export IMAGE_NAME=stmalike/$SERVICE_DIR
