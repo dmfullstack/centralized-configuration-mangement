@@ -1,4 +1,4 @@
-FROM 8-jdk-alpine3.8
+FROM openjdk:8
 VOLUME /tmp
 ADD target/config-server-1.0-SNAPSHOT.jar config-server.jar
 RUN sh -c 'touch /config-server.jar'

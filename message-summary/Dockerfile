@@ -1,4 +1,4 @@
-FROM 8-jdk-alpine3.8
+FROM openjdk:8
 VOLUME /tmp
 ADD target/message-summary-1.0-SNAPSHOT.jar message-summary.jar
 RUN sh -c 'touch /message-summary.jar'
