@@ -2,7 +2,7 @@
 #!/bin/bash
 SERVICE_DIR=$1
 echo "Uploading for image "+$SERVICE_DIR
-echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER" --password-stdin
 cd $SERVICE_DIR
 export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
 export IMAGE_NAME=stmalike/$SERVICE_DIR
